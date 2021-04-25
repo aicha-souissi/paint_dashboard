@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState("Accueil");
+  const history = useHistory();
   const setActiveMenu = (menu) => {
     setSelectedMenu(menu);
   };
@@ -14,7 +15,11 @@ const Header = () => {
           <div className="flex items-center justify-between h-16">
             <div className=" flex items-center">
               <a className="flex-shrink-0" href="/">
-                <img className="h-8 w-8" src="/icons/rocket.svg" alt="Workflow" />
+                <img
+                  className="h-8 w-8"
+                  src="/icons/rocket.svg"
+                  alt="Workflow"
+                />
               </a>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
@@ -31,7 +36,7 @@ const Header = () => {
                   >
                     Accueil
                   </Link>
-                  
+
                   <Link
                     onClick={() => {
                       setActiveMenu("Produit");
@@ -59,7 +64,6 @@ const Header = () => {
                   >
                     Magasin
                   </Link>
-
 
                   <Link
                     onClick={() => {
@@ -145,9 +149,14 @@ const Header = () => {
                           </span>
                         </a>
                         <a
-                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            localStorage.clear();
+                            history.replace("/");
+                          }}
                           className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                           role="menuitem"
+                          href="#"
                         >
                           <span className="flex flex-col">
                             <span>Logout</span>

@@ -11,15 +11,14 @@ const loginUserSuccess = (data) => {
     payload: data,
   };
 };
-export const loginUserApi = (data) => async (dispatch) => {
+export const loginUserApi = (data, history) => async (dispatch) => {
   dispatch(loginUser);
   let userData = await post("users/login", data);
-  if(userData)
-  { 
+  if (userData) {
+    localStorage.setItem("token", userData.token);
     dispatch(loginUserSuccess(userData));
-  }else 
-  {
-      alert("mot de passe ghalet")
+    history.replace('/dashboard')
+  } else {
+    alert("mot de passe ghalet");
   }
-  
 };

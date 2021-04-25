@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
 import Dashboard from "./screens/Dashboard";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import PrivateRoute from "./components/PrivateRoute";
 const App = () => {
   document.body.className = "bg-gray-200";
   return (
@@ -11,9 +12,7 @@ const App = () => {
       <div className="bg-gray-200 h-screen flex  justify-center w-full">
         <Router>
           <Switch>
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>
+            <PrivateRoute path="/dashboard" component={Dashboard} />
             <Route path="/">
               <Login />
             </Route>

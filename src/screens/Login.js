@@ -1,18 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form"; 
-import {useDispatch} from 'react-redux'
-import { loginUser, loginUserApi } from "../redux/actions/user.actions";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { loginUserApi } from "../redux/actions/user.actions";
+import { useHistory } from "react-router-dom";
 const Login = () => {
+  const history = useHistory() ; 
+  
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const dispatch =useDispatch() ; 
+  const dispatch = useDispatch();
   const submitForm = (data) => {
-    dispatch(loginUserApi(data)) ; 
+    dispatch(loginUserApi(data,history));
   };
   return (
     <div className=" justify-self-center mt-24 flex max-h-96 flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
@@ -39,7 +42,10 @@ const Login = () => {
                 id="email"
                 className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 placeholder="Your email"
-                {...register("email", { required: true ,pattern:`/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/` })}
+                {...register("email", {
+                  required: true,
+                  pattern: `/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/`,
+                })}
               />
             </div>
             {errors.email && (
