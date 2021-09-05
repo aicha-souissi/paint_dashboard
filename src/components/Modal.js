@@ -1,7 +1,23 @@
-import React  from "react";
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addNewMagasin } from "../redux/actions/magasin.action";
 
-const Modal = ({ show, closeModal ,lat ,long }) => {
-   
+const Modal = ({ show, closeModal, lat, long }) => {
+  useEffect(() => {
+    setMagasinData({ ...magasinData, lat: lat, lng: long })
+  }, [lat, long])
+  const [magasinData, setMagasinData] = useState({
+    nameMagasin: "",
+    lat: lat,
+    lng: long,
+    adrFb: "",
+    email: "",
+    numTel: ""
+  })
+  const dispatch = useDispatch();
+
   return (
     <div
       class={`fixed z-10 inset-0 overflow-y-auto ${show ? "" : "hidden"}`}
@@ -56,16 +72,20 @@ const Modal = ({ show, closeModal ,lat ,long }) => {
                         Nom de magasin
                       </label>
                       <input
+                        value={magasinData.nameMagasin}
                         type="text"
                         id="name-with-label"
                         class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                         name="email"
                         placeholder="Your name"
+                        onChange={(event) => {
+                          setMagasinData({ ...magasinData, nameMagasin: event.target.value })
+                        }}
                       />
                     </div>
                     <div class=" relative my-2 ">
                       <label for="name-with-label" class="text-gray-700">
-                        Lat 
+                        Lat
                       </label>
                       <input
                         type="text"
@@ -102,6 +122,42 @@ const Modal = ({ show, closeModal ,lat ,long }) => {
                         class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                         name="email"
                         placeholder="Your name"
+                        value={magasinData.adrFb}
+                        onChange={(event) => {
+                          setMagasinData(({ ...magasinData, adrFb: event.target.value }))
+                        }}
+                      />
+                    </div>
+                    <div class=" relative my-2 ">
+                      <label for="name-with-label" class="text-gray-700">
+                        Email
+                      </label>
+                      <input
+                        type="text"
+                        id="name-with-label"
+                        class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                        name="email"
+                        placeholder="Your name"
+                        value={magasinData.email}
+                        onChange={(event) => {
+                          setMagasinData(({ ...magasinData, email: event.target.value }))
+                        }}
+                      />
+                    </div>
+                    <div class=" relative my-2 ">
+                      <label for="name-with-label" class="text-gray-700">
+                        Phone Number
+                      </label>
+                      <input
+                        type="text"
+                        id="name-with-label"
+                        class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                        name="email"
+                        placeholder="Your name"
+                        value={magasinData.numTel}
+                        onChange={(event) => {
+                          setMagasinData(({ ...magasinData, numTel: event.target.value }))
+                        }}
                       />
                     </div>
                   </div>
@@ -112,6 +168,7 @@ const Modal = ({ show, closeModal ,lat ,long }) => {
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               onClick={() => {
+                dispatch(addNewMagasin(magasinData))
                 // un traitement d'ajout
                 closeModal();
               }}

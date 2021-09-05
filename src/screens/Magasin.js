@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import MapGL from "@urbica/react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Modal from "../components/Modal";
-
+import { useDispatch, useSelector } from "react-redux";
+import { deleteMagasinApi, getAllMagasinApi } from "../redux/actions/magasin.action";
+import { setRTLTextPlugin } from 'mapbox-gl';
+setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js')
 const Magasin = () => {
   const MAPBOX_ACCESS_TOKEN =
     "pk.eyJ1IjoiYWljaGExMjMiLCJhIjoiY2tuMzJreTJjMDNzYzMwcXJlc3BtYXdnZiJ9.INQaPo9c5BQa99dsA9b4rg";
   const [showModal, setShowModal] = useState(false);
+  const { list } = useSelector(({ magasin }) => magasin)
+  const dispatch = useDispatch();
+  
   const closeModal = () => {
     setShowModal(false);
   };
@@ -18,6 +24,10 @@ const Magasin = () => {
   const [lat, setLat] = useState(0);
   const [long, setLong] = useState(0);
   useEffect(() => {
+    dispatch(getAllMagasinApi());
+  }, [])
+  useEffect(() => {
+
     navigator.geolocation.getCurrentPosition((position) => {
       console.log(position);
 
@@ -44,18 +54,7 @@ const Magasin = () => {
                     >
                       magasin
                     </th>
-                    <th
-                      scope="col"
-                      class="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
-                    >
-                      ville
-                    </th>
-                    <th
-                      scope="col"
-                      class="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
-                    >
-                      adresse
-                    </th>
+
                     <th
                       scope="col"
                       class="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
@@ -89,113 +88,57 @@ const Magasin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                          <a href="#" class="block relative">
-                            <img
-                              alt="profil"
-                              src="/images/person/8.jpg"
-                              class="mx-auto object-cover rounded-full h-10 w-10 "
-                            />
-                          </a>
-                        </div>
-                        <div class="ml-3">
-                          <p class="text-gray-900 whitespace-no-wrap">
-                            Jean marc
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p class="text-gray-900 whitespace-no-wrap">Admin</p>
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p class="text-gray-900 whitespace-no-wrap">12/09/2020</p>
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span
-                          aria-hidden="true"
-                          class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                        ></span>
 
-                        <span class="relative">active</span>
-                      </span>
-                    </td>
-                  </tr>
+                  {list.map((elm) => {
+                    return <tr>
+                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <div class="flex items-center">
+                          <div class="flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                            </svg>
+                          </div>
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {elm.nameMagasin}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap">{elm.numTel}</p>
+                      </td>
+                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap">{elm.lat}</p>
+                      </td>
+                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap">{elm.lng}</p>
+                      </td>
+                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap">{elm.email}</p>
+                      </td>
+                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap">{elm.adrFb}</p>
+                      </td>
+                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 
-                  <tr>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                          <a href="#" class="block relative">
-                            <img
-                              alt="profil"
-                              src="/images/person/10.jpg"
-                              class="mx-auto object-cover rounded-full h-10 w-10 "
-                            />
-                          </a>
+                        <div className=" flex justify-between flex-row w-40">
+
+                          <button
+                            onClick={() => {
+                              dispatch(deleteMagasinApi(elm._id))
+                            }}
+                            type="button"
+                            class="py-2 px-4  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                          >
+                            supprimer
+                          </button>
                         </div>
-                        <div class="ml-3">
-                          <p class="text-gray-900 whitespace-no-wrap">
-                            Ecric marc
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p class="text-gray-900 whitespace-no-wrap">Developer</p>
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p class="text-gray-900 whitespace-no-wrap">02/10/2018</p>
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span
-                          aria-hidden="true"
-                          class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                        ></span>
-                        <span class="relative">active</span>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                          <a href="#" class="block relative">
-                            <img
-                              alt="profil"
-                              src="/images/person/6.jpg"
-                              class="mx-auto object-cover rounded-full h-10 w-10 "
-                            />
-                          </a>
-                        </div>
-                        <div class="ml-3">
-                          <p class="text-gray-900 whitespace-no-wrap">
-                            Julien Huger
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p class="text-gray-900 whitespace-no-wrap">User</p>
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p class="text-gray-900 whitespace-no-wrap">23/09/2010</p>
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span
-                          aria-hidden="true"
-                          class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                        ></span>
-                        <span class="relative">active</span>
-                      </span>
-                    </td>
-                  </tr>
+
+                      </td>
+                    </tr>
+                  })}
+
                 </tbody>
               </table>
               <div class="px-5 bg-white py-5 flex flex-col xs:flex-row items-center xs:justify-between">

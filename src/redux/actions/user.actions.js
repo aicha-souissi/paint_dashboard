@@ -14,7 +14,8 @@ const loginUserSuccess = (data) => {
 export const loginUserApi = (data, history) => async (dispatch) => {
   dispatch(loginUser);
   let userData = await post("users/login", data);
-  if (userData) {
+  console.log("USER DATA",userData) ; 
+  if (userData.success) {
     localStorage.setItem("token", userData.token);
     dispatch(loginUserSuccess(userData));
     history.replace('/dashboard')

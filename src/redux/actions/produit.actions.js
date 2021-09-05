@@ -1,4 +1,4 @@
-import { get, post } from "../../utils/apiHelpers";
+import { get, post, remove } from "../../utils/apiHelpers";
 import {
   ADD_COLOR,
   ADD_PRODUCT,
@@ -43,9 +43,9 @@ export const addProductApi = (data) => async (dispatch) => {
     let result = await post("produit/addproduit", data, config);
     if (result.success) {
       dispatch(addProductSuccess());
-      dispatch(getProductsApi()) ; 
+      dispatch(getProductsApi());
     }
-  } catch (error) {}
+  } catch (error) { }
 };
 export const getProductsApi = () => async (dispatch) => {
   dispatch(getProducts());
@@ -60,5 +60,20 @@ export const getProductsApi = () => async (dispatch) => {
     if (result.success) {
       dispatch(getProductsSuccess(result.message));
     }
-  } catch (error) {}
+  } catch (error) { }
 };
+
+export const deleteProduct = (id) => async dispatch => {
+  let token = localStorage.getItem("token");
+  let config = {
+    headers: {
+      access_token: token,
+    },
+  };
+  try {
+    let result = await remove("produit/deleteproduit/" + id, config);
+    if (result.success) {
+      dispatch(getProductsApi());
+    }
+  } catch (error) { }
+}

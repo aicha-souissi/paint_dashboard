@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = `http://localhost:3001`;
+const baseUrl = `https://paint-backend.herokuapp.com`;
 
 const post = async (url, data, config = {}) => {
   try {

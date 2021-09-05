@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AddProduitModal from "../components/AddProduitModal";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsApi } from "../redux/actions/produit.actions";
+import { deleteProduct, getProductsApi } from "../redux/actions/produit.actions";
+import moment from "moment";
 const Produit = () => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
@@ -59,14 +60,20 @@ const Produit = () => {
                   scope="col"
                   class="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                 >
-                  status
+                  Formule
+                </th>
+                <th
+                  scope="col"
+                  class="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                >
+                  Actions
                 </th>
               </tr>
             </thead>
             <tbody>
               {!loading &&
                 list.map((elm) => {
-                  let baseUrl = `http://localhost:3001`;
+                  let baseUrl = `https://paint-backend.herokuapp.com`;
                   return (
                     <tr key={elm._id}>
                       <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -89,17 +96,33 @@ const Produit = () => {
                       </td>
                       <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p class="text-gray-900 whitespace-no-wrap">
-                          12/09/2020
+                          {moment(elm.createdAt).format('DD/MM/YYYY')}
                         </p>
                       </td>
                       <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                          <span
-                            aria-hidden="true"
-                            class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                          ></span>
-                          <span class="relative">active</span>
-                        </span>
+                        {`(Hauteur * Largeur) ${elm.symbol} ${elm.valeur} `}
+                      </td>
+                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <div className=" flex justify-between flex-row w-40">
+                          <button
+                            onClick={() => {
+
+                            }}
+                            type="button"
+                            class="py-2 px-4 mx-2  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                          >
+                            modifier
+                          </button>
+                          <button
+                            onClick={() => {
+                                dispatch(deleteProduct(elm._id)) ; 
+                            }}
+                            type="button"
+                            class="py-2 px-4  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                          >
+                            supprimer
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );

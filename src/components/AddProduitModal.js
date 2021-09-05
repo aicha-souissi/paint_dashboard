@@ -5,17 +5,18 @@ import { addColorApi } from "../redux/actions/color.actions";
 import { addProductApi } from "../redux/actions/produit.actions";
 const AddProduitModal = ({ show, closeModal }) => {
   const [nameProduit, setNameProduit] = useState("");
-  const [typeProduit, settypeProduit] = useState("");
+  const [symbol, setSymbol] = useState('*');
+  const [valeur, setValeur] = useState(0);
   const [support, setSupport] = useState("");
   const [aspect, setAspect] = useState("");
   const [info, setInfo] = useState("");
   const [typeUtilisation, setTypeUtilisation] = useState("");
   const [natureProduit, setNatureProduit] = useState("");
   const [image, setImage] = useState(null);
+  const [qteDispo, setQteDispo] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
     setNameProduit("");
-    settypeProduit("");
     setSupport("");
     setAspect("");
     setInfo("");
@@ -92,19 +93,22 @@ const AddProduitModal = ({ show, closeModal }) => {
                       </div>
                       <div class=" relative my-2 ">
                         <label for="name-with-label" class="text-gray-700">
-                          Type
+                          Symbol
                         </label>
-                        <input
+                        <select
                           type="text"
                           id="name-with-label"
                           class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                           name="type"
-                          placeholder="Type"
-                          value={typeProduit}
+                          placeholder="Formule"
+                          value={symbol}
                           onChange={(event) => {
-                            settypeProduit(event.target.value);
+                            setSymbol(event.target.value);
                           }}
-                        />
+                        >
+                          <option value="*">X</option>
+                          <option value="/">/</option>
+                        </select>
                       </div>
                       <div class=" relative my-2 ">
                         <label for="name-with-label" class="text-gray-700">
@@ -119,6 +123,22 @@ const AddProduitModal = ({ show, closeModal }) => {
                           value={natureProduit}
                           onChange={(event) => {
                             setNatureProduit(event.target.value);
+                          }}
+                        />
+                      </div>
+                      <div class=" relative my-2 ">
+                        <label for="name-with-label" class="text-gray-700">
+                          Valeur
+                        </label>
+                        <input
+                          type="text"
+                          id="name-with-label"
+                          class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                          name="nature"
+                          placeholder="Nature"
+                          value={valeur}
+                          onChange={(event) => {
+                            setValeur(event.target.value);
                           }}
                         />
                       </div>
@@ -188,6 +208,22 @@ const AddProduitModal = ({ show, closeModal }) => {
                       </div>
                       <div class=" relative my-2 ">
                         <label for="name-with-label" class="text-gray-700">
+                          Qte Dispo ( Doit etre sépraré par "/")
+                        </label>
+                        <input
+                          type="text"
+                          id="name-with-label"
+                          class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                          name="type"
+                          placeholder="Type"
+                          value={qteDispo}
+                          onChange={(event) => {
+                            setQteDispo(event.target.value);
+                          }}
+                        />
+                      </div>
+                      <div class=" relative my-2 ">
+                        <label for="name-with-label" class="text-gray-700">
                           Image
                         </label>
                         <input
@@ -195,7 +231,7 @@ const AddProduitModal = ({ show, closeModal }) => {
                           id="name-with-label"
                           class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                           name="image"
-                          
+
                           onChange={(event) => {
                             setImage(event.target.files[0]);
                           }}
@@ -210,15 +246,18 @@ const AddProduitModal = ({ show, closeModal }) => {
                   onClick={() => {
                     // un traitement d'ajout
                     let data = new FormData();
+                    let qtyList = qteDispo.split('/');
                     data.append("nameProduit", nameProduit);
-                    data.append("typeProduit", typeProduit);
+                    data.append("symbol", symbol);
+                    data.append("valeur", valeur);
                     data.append("support", support);
                     data.append("aspect", aspect);
                     data.append("info", info);
-                    data.append('typeUtilisation',typeUtilisation);
-                    data.append('nature',natureProduit);
-                    data.append('image',image);
-                     dispatch(addProductApi(data));
+                    data.append('typeUtilisation', typeUtilisation);
+                    data.append('nature', natureProduit);
+                    data.append('image', image);
+                    data.append('qtyDispo', qteDispo)
+                    dispatch(addProductApi(data));
                     closeModal();
                   }}
                   type="button"
