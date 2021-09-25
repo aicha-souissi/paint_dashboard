@@ -150,6 +150,10 @@ const AddTendanceModal = ({ show, closeModal }) => {
                                         // un traitement d'ajout
                                         let data = new FormData();
                                         data.append("nameColor", nameProduit);
+                                        if(refColor=="")
+                                        {
+                                            setRefColor(baseList[0]._id) ; 
+                                        }
                                         data.append("refColor", refColor);
                                         data.append("description", info);
 
