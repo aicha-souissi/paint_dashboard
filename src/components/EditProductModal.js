@@ -259,7 +259,7 @@ const EditProduitModal = ({ show, closeModal, produit }) => {
                     data.append('nature', natureProduit);
                     data.append('image', image);
                     data.append('qtyDispo', qteDispo)
-                    dispatch(updateProductApi(data));
+                    dispatch(updateProductApi(produit._id,data));
                     closeModal();
                   }}
                   type="button"

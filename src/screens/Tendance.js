@@ -5,6 +5,7 @@ import { getProductsApi } from "../redux/actions/produit.actions";
 import AddTendanceModal from "../components/AddTendance";
 import { deleteTendanceApi, getTendancesApi } from "../redux/actions/tendance.action";
 import EditTendanceModal from "../components/EditTendanceModal";
+import { getAllColosApi } from "../redux/actions/color.actions";
 const Tendance = () => {
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -13,6 +14,7 @@ const Tendance = () => {
   const { list, loading } = useSelector((state) => state.tendance);
   useEffect(() => {
     dispatch(getTendancesApi());
+    dispatch(getAllColosApi()) ; 
   }, []);
   return (
     <div>
