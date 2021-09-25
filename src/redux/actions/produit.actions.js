@@ -1,4 +1,4 @@
-import { get, post, remove } from "../../utils/apiHelpers";
+import { get, post, remove, update } from "../../utils/apiHelpers";
 import {
   ADD_COLOR,
   ADD_PRODUCT,
