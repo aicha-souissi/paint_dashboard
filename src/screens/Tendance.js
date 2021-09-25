@@ -3,10 +3,13 @@ import AddProduitModal from "../components/AddProduitModal";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsApi } from "../redux/actions/produit.actions";
 import AddTendanceModal from "../components/AddTendance";
-import { getTendancesApi } from "../redux/actions/tendance.action";
+import { deleteTendanceApi, getTendancesApi } from "../redux/actions/tendance.action";
+import EditTendanceModal from "../components/EditTendanceModal";
 const Tendance = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const dispatch = useDispatch();
+  const [selectedTendance, setSelectedTendance] = useState({});
   const { list, loading } = useSelector((state) => state.tendance);
   useEffect(() => {
     dispatch(getTendancesApi());
@@ -19,6 +22,13 @@ const Tendance = () => {
         closeModal={() => {
           setShowModal(false);
         }}
+      />
+      <EditTendanceModal
+        show={showEditModal}
+        closeModal={() => {
+          setShowEditModal(false);
+        }}
+        tendance={selectedTendance}
       />
       <div className="flex  justify-end py-3">
         <div>
@@ -117,7 +127,8 @@ const Tendance = () => {
                         <div className=" flex justify-between flex-row w-40">
                           <button
                             onClick={() => {
-
+                              setSelectedTendance(elm);
+                              setShowEditModal(true);
                             }}
                             type="button"
                             class="py-2 px-4 mx-2  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
@@ -126,7 +137,7 @@ const Tendance = () => {
                           </button>
                           <button
                             onClick={() => {
-
+                              dispatch(deleteTendanceApi(elm._id));
                             }}
                             type="button"
                             class="py-2 px-4  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "

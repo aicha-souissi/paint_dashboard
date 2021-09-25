@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseUrl = `https://paint-backend.herokuapp.com`;
-
+//const baseUrl = `https://paint-backend.herokuapp.com`;
+const baseUrl ='http://localhost:3001'
 const post = async (url, data, config = {}) => {
   try {
     let result = await axios.post(`${baseUrl}/${url}`, data, { ...config });
@@ -32,7 +32,7 @@ const update = async (url, data, config = {}) => {
 };
 const remove = async (url, config = {}) => {
   try {
-    let result = await axios.delete(`${baseUrl}/${url}`, { ...config });
+    let result = await axios.delete(`${baseUrl}/${url}`, config);
     return result.data;
   } catch (error) {
     console.log(error.message);

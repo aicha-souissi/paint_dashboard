@@ -1,4 +1,4 @@
-import { get, post } from "../../utils/apiHelpers";
+import { get, post, remove } from "../../utils/apiHelpers";
 import {
     ADD_COLOR,
     ADD_PRODUCT,
@@ -51,6 +51,42 @@ export const addTendanceApi = (data) => async (dispatch) => {
         }
     } catch (error) { }
 };
+export const updateTendanceApi = (id, data) => async (dispatch) => {
+    dispatch(addTendance());
+    let token = localStorage.getItem("token");
+    let config = {
+        headers: {
+            access_token: token,
+        },
+    };
+    try {
+        let result = await post("tendance/updatetendance" / id, data, config);
+        if (result.success) {
+            dispatch(addTendanceSuccess());
+            dispatch(getTendancesApi());
+        }
+    } catch (error) { }
+};
+
+export const deleteTendanceApi = (id) => async (dispatch) => {
+
+    let token = localStorage.getItem("token");
+    let config = {
+        headers: {
+            access_token: token,
+        },
+    };
+    try {
+        let result = await remove("tendance/deletetendance/" + id, config);
+        if (result.success) {
+
+            dispatch(getTendancesApi());
+        }
+    } catch (error) {
+        console.log("ERROR", error);
+    }
+};
+
 export const getTendancesApi = () => async (dispatch) => {
     dispatch(getTendances());
     let token = localStorage.getItem("token");
