@@ -47,6 +47,22 @@ export const addProductApi = (data) => async (dispatch) => {
     }
   } catch (error) { }
 };
+export const updateProductApi = (id, data) => async (dispatch) => {
+  dispatch(addProduct());
+  let token = localStorage.getItem("token");
+  let config = {
+    headers: {
+      access_token: token,
+    },
+  };
+  try {
+    let result = await post("produit/updateproduit/" + id, data, config);
+    if (result.success) {
+      dispatch(addProductSuccess());
+      dispatch(getProductsApi());
+    }
+  } catch (error) { }
+};
 export const getProductsApi = () => async (dispatch) => {
   dispatch(getProducts());
   let token = localStorage.getItem("token");

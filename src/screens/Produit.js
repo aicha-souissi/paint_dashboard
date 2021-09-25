@@ -3,8 +3,11 @@ import AddProduitModal from "../components/AddProduitModal";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, getProductsApi } from "../redux/actions/produit.actions";
 import moment from "moment";
+import EditProduitModal from "../components/EditProductModal";
 const Produit = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState({});
   const dispatch = useDispatch();
   const { list, loading } = useSelector((state) => state.products);
   useEffect(() => {
@@ -17,6 +20,13 @@ const Produit = () => {
         show={showModal}
         closeModal={() => {
           setShowModal(false);
+        }}
+      />
+      <EditProduitModal
+        show={showEditModal}
+        produit={selectedProduct}
+        closeModal={() => {
+          setShowEditModal(false);
         }}
       />
       <div className="flex  justify-end py-3">
@@ -106,7 +116,8 @@ const Produit = () => {
                         <div className=" flex justify-between flex-row w-40">
                           <button
                             onClick={() => {
-
+                              setShowEditModal(true);
+                              setSelectedProduct(elm);
                             }}
                             type="button"
                             class="py-2 px-4 mx-2  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
@@ -115,7 +126,7 @@ const Produit = () => {
                           </button>
                           <button
                             onClick={() => {
-                                dispatch(deleteProduct(elm._id)) ; 
+                              dispatch(deleteProduct(elm._id));
                             }}
                             type="button"
                             class="py-2 px-4  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "

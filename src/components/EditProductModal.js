@@ -1,30 +1,31 @@
 import React, { useState, useEffect } from "react";
+import { SketchPicker, Color } from "react-color";
 import { useDispatch } from "react-redux";
+import { addColorApi } from "../redux/actions/color.actions";
 import { addProductApi } from "../redux/actions/produit.actions";
-const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,typeUt,natureP,imge,qte,id }) => {
-  const [Name, setName] = useState(name);
-  const [Symbl, setSymbl] = useState(symbl);
-  const [Val, setVal] = useState(val);
-  const [Supprt, setSupprt] = useState(supprt);
-  const [Aspct, setAspct] = useState(aspct);
-  const [Infor, setInfor] = useState(infor);
-  const [TypeUt, setTypeUt] = useState(typeUt);
-  const [NatureP, setNatureP] = useState(natureP);
-  const [Imge, setImge] = useState(imge);
-  const [Qte, setQte] = useState(qte);
+const EditProduitModal = ({ show, closeModal, produit }) => {
+  const [nameProduit, setNameProduit] = useState("");
+  const [symbol, setSymbol] = useState('*');
+  const [valeur, setValeur] = useState(0);
+  const [support, setSupport] = useState("");
+  const [aspect, setAspect] = useState("");
+  const [info, setInfo] = useState("");
+  const [typeUtilisation, setTypeUtilisation] = useState("");
+  const [natureProduit, setNatureProduit] = useState("");
+  const [image, setImage] = useState(null);
+  const [qteDispo, setQteDispo] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
-    setName(name);
-    setSymbl(symbl);
-    setSupprt(supprt);
-    setVal(val);
-    setAspct(aspct);
-    setInfor(infor);
-    setTypeUt(typeUt);
-    setNatureP(natureP);
-    setImge(imge);
-    setQte(qte);
-  }, [show])
+    console.log("Produit", produit);
+    setNameProduit(produit.nameProduit);
+    setSupport(produit.support);
+    setAspect(produit.aspect);
+    setInfo(produit.info);
+    setTypeUtilisation(produit.typeUtilisation);
+    setNatureProduit(produit.nature);
+  
+    setImage(null);
+  }, [show, produit]);
 
   return (
     <div>
@@ -72,7 +73,7 @@ const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,
                     class="text-lg leading-6 font-medium text-gray-900"
                     id="modal-title"
                   >
-                    Modifier un Produit
+                    Ajouter un Produit
                   </h3>
                   <div class="mt-2">
                     <div className="flex flex-col">
@@ -86,26 +87,9 @@ const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,
                           class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                           name="name"
                           placeholder="Produit"
-                          value={Name}
+                          value={nameProduit}
                           onChange={(event) => {
-                            setName(event.target.value);
-                          }}
-                        />
-                      </div>
-                      
-                      <div class=" relative my-2 ">
-                        <label for="name-with-label" class="text-gray-700">
-                          Nature
-                        </label>
-                        <input
-                          type="text"
-                          id="name-with-label"
-                          class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                          name="nature"
-                          placeholder="Nature"
-                          value={NatureP}
-                          onChange={(event) => {
-                            setNatureP(event.target.value);
+                            setNameProduit(event.target.value);
                           }}
                         />
                       </div>
@@ -119,16 +103,31 @@ const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,
                           class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                           name="type"
                           placeholder="Formule"
-                          value={Symbl}
+                          value={symbol}
                           onChange={(event) => {
-                            setSymbl(event.target.value);
+                            setSymbol(event.target.value);
                           }}
                         >
                           <option value="*">X</option>
                           <option value="/">/</option>
                         </select>
                       </div>
-
+                      <div class=" relative my-2 ">
+                        <label for="name-with-label" class="text-gray-700">
+                          Nature
+                        </label>
+                        <input
+                          type="text"
+                          id="name-with-label"
+                          class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                          name="nature"
+                          placeholder="Nature"
+                          value={natureProduit}
+                          onChange={(event) => {
+                            setNatureProduit(event.target.value);
+                          }}
+                        />
+                      </div>
                       <div class=" relative my-2 ">
                         <label for="name-with-label" class="text-gray-700">
                           Valeur
@@ -139,9 +138,9 @@ const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,
                           class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                           name="nature"
                           placeholder="Nature"
-                          value={Val}
+                          value={valeur}
                           onChange={(event) => {
-                            setVal(event.target.value);
+                            setValeur(event.target.value);
                           }}
                         />
                       </div>
@@ -155,9 +154,9 @@ const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,
                           class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                           name="support"
                           placeholder="Support"
-                          value={Supprt}
+                          value={support}
                           onChange={(event) => {
-                            setSupprt(event.target.value);
+                            setSupport(event.target.value);
                           }}
                         />
                       </div>
@@ -171,9 +170,9 @@ const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,
                           class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                           name="aspect"
                           placeholder="Aspect"
-                          value={Aspct}
+                          value={aspect}
                           onChange={(event) => {
-                            setAspct(event.target.value);
+                            setAspect(event.target.value);
                           }}
                         />
                       </div>
@@ -187,9 +186,9 @@ const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,
                           class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                           name="info"
                           placeholder="info"
-                          value={Infor}
+                          value={info}
                           onChange={(event) => {
-                            setInfor(event.target.value);
+                            setInfo(event.target.value);
                           }}
                         />
                       </div>
@@ -203,9 +202,9 @@ const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,
                           class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                           name="type"
                           placeholder="Type"
-                          value={TypeUt}
+                          value={typeUtilisation}
                           onChange={(event) => {
-                            setTypeUt(event.target.value);
+                            setTypeUtilisation(event.target.value);
                           }}
                         />
                       </div>
@@ -219,9 +218,9 @@ const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,
                           class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                           name="type"
                           placeholder="Type"
-                          value={Qte}
+                          value={qteDispo}
                           onChange={(event) => {
-                            setQte(event.target.value);
+                            setQteDispo(event.target.value);
                           }}
                         />
                       </div>
@@ -236,7 +235,7 @@ const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,
                           name="image"
 
                           onChange={(event) => {
-                            setImge(event.target.files[0]);
+                            setImage(event.target.files[0]);
                           }}
                         />
                       </div>
@@ -248,19 +247,7 @@ const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,
                 <button
                   onClick={() => {
                     // un traitement d'ajout
-                    let data = {
-                      name: Name,
-                      symbl: Symbl,
-                        supprt:Supprt,
-                        val:Val,
-                        aspct:Aspct,
-                        infor:Infor,
-                        typeUt:TypeUt,
-                        natureP:NatureP,
-                        imge:Imge,
-                        qte:Qte,
-                };
-                    /*new FormData();
+                    let data = new FormData();
                     let qtyList = qteDispo.split('/');
                     data.append("nameProduit", nameProduit);
                     data.append("symbol", symbol);
@@ -272,11 +259,7 @@ const EditProduitModal = ({ show, closeModal, name,symbl,val,supprt,aspct,infor,
                     data.append('nature', natureProduit);
                     data.append('image', image);
                     data.append('qtyDispo', qteDispo)
-                    
-                    
-                    */
-
-                    dispatch(addProductApi(id,data));
+                    dispatch(addProductApi(data));
                     closeModal();
                   }}
                   type="button"
