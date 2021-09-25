@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { SketchPicker, Color } from "react-color";
 import { useDispatch } from "react-redux";
 import { addColorApi } from "../redux/actions/color.actions";
-import { addProductApi } from "../redux/actions/produit.actions";
+import { addProductApi, updateProductApi } from "../redux/actions/produit.actions";
 const EditProduitModal = ({ show, closeModal, produit }) => {
   const [nameProduit, setNameProduit] = useState("");
   const [symbol, setSymbol] = useState('*');
@@ -259,7 +259,7 @@ const EditProduitModal = ({ show, closeModal, produit }) => {
                     data.append('nature', natureProduit);
                     data.append('image', image);
                     data.append('qtyDispo', qteDispo)
-                    dispatch(addProductApi(data));
+                    dispatch(updateProductApi(data));
                     closeModal();
                   }}
                   type="button"
