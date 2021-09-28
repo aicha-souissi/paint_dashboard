@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import AddProduitModal from "../components/AddProduitModal";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, getProductsApi } from "../redux/actions/produit.actions";
+import {
+  deleteProduct,
+  getProductsApi,
+  searchProduct,
+} from "../redux/actions/produit.actions";
 import moment from "moment";
 import EditProduitModal from "../components/EditProductModal";
 const Produit = () => {
@@ -15,7 +19,6 @@ const Produit = () => {
   }, []);
   return (
     <div>
-      <h1 className="py-2 ml-2"> Liste des produits </h1>
       <AddProduitModal
         show={showModal}
         closeModal={() => {
@@ -29,7 +32,18 @@ const Produit = () => {
           setShowEditModal(false);
         }}
       />
-      <div className="flex  justify-end py-3">
+      <div className="flex  justify-between py-3 m-3">
+        <div>
+          <input
+            type="text"
+            id="text"
+            className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            placeholder="Recherche"
+            onChange={(event) => {
+              dispatch(searchProduct(event.target.value));
+            }}
+          />
+        </div>
         <div>
           <button
             onClick={() => {
@@ -64,7 +78,7 @@ const Produit = () => {
                   scope="col"
                   class="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                 >
-                  Created at
+                  Date
                 </th>
                 <th
                   scope="col"
@@ -106,7 +120,7 @@ const Produit = () => {
                       </td>
                       <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p class="text-gray-900 whitespace-no-wrap">
-                          {moment(elm.createdAt).format('DD/MM/YYYY')}
+                          {moment(elm.createdAt).format("DD/MM/YYYY")}
                         </p>
                       </td>
                       <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">

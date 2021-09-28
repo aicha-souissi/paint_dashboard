@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import logo from '../assets/img/logo_mca.PNG'
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState("Accueil");
@@ -17,8 +18,8 @@ const Header = () => {
               <a className="flex-shrink-0" href="/">
                 <img
                   className="h-8 w-8"
-                  src="/icons/rocket.svg"
-                  alt="Workflow"
+                  src={logo}
+                  alt=""
                 />
               </a>
               <div className="hidden md:block">
@@ -135,18 +136,14 @@ const Header = () => {
                           className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                           role="menuitem"
                         >
-                          <span className="flex flex-col">
-                            <span>Settings</span>
-                          </span>
+                          
                         </a>
                         <a
                           href="#"
                           className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                           role="menuitem"
                         >
-                          <span className="flex flex-col">
-                            <span>Account</span>
-                          </span>
+                          
                         </a>
                         <a
                           onClick={(e) => {
@@ -159,7 +156,7 @@ const Header = () => {
                           href="#"
                         >
                           <span className="flex flex-col">
-                            <span>Logout</span>
+                            <span>se déconnecter</span>
                           </span>
                         </a>
                       </div>

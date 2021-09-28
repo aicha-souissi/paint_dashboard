@@ -77,7 +77,7 @@ const Modal = ({ show, closeModal, lat, long }) => {
                         id="name-with-label"
                         class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                         name="email"
-                        placeholder="Your name"
+                        placeholder="magasin"
                         onChange={(event) => {
                           setMagasinData({ ...magasinData, nameMagasin: event.target.value })
                         }}
@@ -121,7 +121,7 @@ const Modal = ({ show, closeModal, lat, long }) => {
                         id="name-with-label"
                         class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                         name="email"
-                        placeholder="Your name"
+                        placeholder="Facebook"
                         value={magasinData.adrFb}
                         onChange={(event) => {
                           setMagasinData(({ ...magasinData, adrFb: event.target.value }))
@@ -137,7 +137,7 @@ const Modal = ({ show, closeModal, lat, long }) => {
                         id="name-with-label"
                         class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                         name="email"
-                        placeholder="Your name"
+                        placeholder="email"
                         value={magasinData.email}
                         onChange={(event) => {
                           setMagasinData(({ ...magasinData, email: event.target.value }))
@@ -146,14 +146,14 @@ const Modal = ({ show, closeModal, lat, long }) => {
                     </div>
                     <div class=" relative my-2 ">
                       <label for="name-with-label" class="text-gray-700">
-                        Phone Number
+                        numéro tel
                       </label>
                       <input
                         type="text"
                         id="name-with-label"
                         class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                         name="email"
-                        placeholder="Your name"
+                        placeholder="numéro tel"
                         value={magasinData.numTel}
                         onChange={(event) => {
                           setMagasinData(({ ...magasinData, numTel: event.target.value }))

@@ -5,8 +5,9 @@ import {
   ADD_PRODUCT_SUCCESS,
   GET_PRODUCTS,
   GET_PRODUCTS_SUCCESS,
+  SEARCH_PRODUCT,
 } from "../const/actionTypes";
-
+import Swal from "sweetalert2";
 export const addProduct = () => {
   return {
     type: ADD_PRODUCT,
@@ -44,8 +45,14 @@ export const addProductApi = (data) => async (dispatch) => {
     if (result.success) {
       dispatch(addProductSuccess());
       dispatch(getProductsApi());
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Une erreur est surevnu",
+      });
     }
-  } catch (error) { }
+  } catch (error) {}
 };
 export const updateProductApi = (id, data) => async (dispatch) => {
   dispatch(addProduct());
@@ -60,8 +67,14 @@ export const updateProductApi = (id, data) => async (dispatch) => {
     if (result.success) {
       dispatch(addProductSuccess());
       dispatch(getProductsApi());
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Une erreur est surevnu",
+      });
     }
-  } catch (error) { }
+  } catch (error) {}
 };
 export const getProductsApi = () => async (dispatch) => {
   dispatch(getProducts());
@@ -75,11 +88,17 @@ export const getProductsApi = () => async (dispatch) => {
     let result = await get("produit/produitlist", config);
     if (result.success) {
       dispatch(getProductsSuccess(result.message));
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Une erreur est surevnu",
+      });
     }
-  } catch (error) { }
+  } catch (error) {}
 };
 
-export const deleteProduct = (id) => async dispatch => {
+export const deleteProduct = (id) => async (dispatch) => {
   let token = localStorage.getItem("token");
   let config = {
     headers: {
@@ -90,6 +109,16 @@ export const deleteProduct = (id) => async dispatch => {
     let result = await remove("produit/deleteproduit/" + id, config);
     if (result.success) {
       dispatch(getProductsApi());
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Une erreur est surevnu",
+      });
     }
-  } catch (error) { }
-}
+  } catch (error) {}
+};
+
+export const searchProduct = (data) => {
+  return { type: SEARCH_PRODUCT, payload: data };
+};

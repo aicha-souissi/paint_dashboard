@@ -4,22 +4,24 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { addColorApi } from "../redux/actions/color.actions";
 import { addProductApi } from "../redux/actions/produit.actions";
-import { addTendanceApi } from "../redux/actions/tendance.action";
+import { addTendanceApi ,updateTendanceApi} from "../redux/actions/tendance.action";
 const EditTendanceModal = ({ show, closeModal, tendance }) => {
-    const [nameProduit, setNameProduit] = useState("");
     const { baseList } = useSelector(({ colors }) => colors)
+    const dispatch = useDispatch();
+  
+    const [nameProduit, setNameProduit] = useState("");
+    
 
     const [info, setInfo] = useState("");
 
     const [refColor, setRefColor] = useState("");
     const [image, setImage] = useState(null);
-    const dispatch = useDispatch();
-    useEffect(() => {
+     useEffect(() => {
         console.log("Tendance", tendance);
         setNameProduit(tendance.nameColor);
 
         setInfo(tendance.description);
-        setRefColor(tendance.refColor);
+        setRefColor( tendance.refColor ? tendance.refColor._id:"");
         setImage(null);
     }, [show]);
 
@@ -69,7 +71,7 @@ const EditTendanceModal = ({ show, closeModal, tendance }) => {
                                         class="text-lg leading-6 font-medium text-gray-900"
                                         id="modal-title"
                                     >
-                                        Ajouter une tendance
+                                        Modifier une tendance
                                     </h3>
                                     <div class="mt-2">
                                         <div className="flex flex-col">
@@ -82,7 +84,7 @@ const EditTendanceModal = ({ show, closeModal, tendance }) => {
                                                     id="name-with-label"
                                                     class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                                                     name="name"
-                                                    placeholder="Produit"
+                                                    placeholder="nom"
                                                     value={nameProduit}
                                                     onChange={(event) => {
                                                         setNameProduit(event.target.value);
@@ -155,7 +157,7 @@ const EditTendanceModal = ({ show, closeModal, tendance }) => {
                                         data.append("description", info);
 
                                         data.append('tendance', image);
-                                        dispatch(EditTendanceModal(tendance._id,data));
+                                        dispatch(updateTendanceApi(tendance._id,data));
                                         closeModal();
                                     }}
                                     type="button"

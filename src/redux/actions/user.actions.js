@@ -1,5 +1,6 @@
 import { post } from "../../utils/apiHelpers";
 import { USER_LOGIN, USER_LOGIN_SUCCESS } from "../const/actionTypes";
+import Swal from "sweetalert2";
 const loginUser = () => {
   return {
     type: USER_LOGIN,
@@ -20,6 +21,11 @@ export const loginUserApi = (data, history) => async (dispatch) => {
     dispatch(loginUserSuccess(userData));
     history.replace('/dashboard')
   } else {
-    alert("mot de passe ghalet");
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Adresse ou mot de passe incorecte!',
+      
+    })
   }
 };

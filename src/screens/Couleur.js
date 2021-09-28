@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import EditColorModal from "../components/EditColorModal";
 import AddColorModal from "../components/AddColorModal";
 import { deleteColorApi, getAllColosApi } from "../redux/actions/color.actions";
+import { SEARCH_COLOR } from "../redux/const/actionTypes";
 
 const Couleur = () => {
   const [selectedColor, setSelectedColor] = useState({
@@ -33,8 +34,23 @@ const Couleur = () => {
         name={selectedColor.name}
         id={selectedColor.id}
       />
-      <div className="flex   justify-end py-3">
+      <div className="flex   justify-between py-3 ">
         <div>
+        <input
+            type="text"
+            id="text"
+            className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            placeholder="Recherche"
+            onChange={(event) => {
+              dispatch({
+                type: SEARCH_COLOR,
+                payload: event.target.value,
+              });
+            }}
+          />
+        </div>
+        <div>
+         
           <button
             onClick={() => {
               setShowModal(true);

@@ -3,9 +3,13 @@ import AddProduitModal from "../components/AddProduitModal";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsApi } from "../redux/actions/produit.actions";
 import AddTendanceModal from "../components/AddTendance";
-import { deleteTendanceApi, getTendancesApi } from "../redux/actions/tendance.action";
+import {
+  deleteTendanceApi,
+  getTendancesApi,
+} from "../redux/actions/tendance.action";
 import EditTendanceModal from "../components/EditTendanceModal";
 import { getAllColosApi } from "../redux/actions/color.actions";
+import { SEARCH_TENDANCE } from "../redux/const/actionTypes";
 const Tendance = () => {
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -14,11 +18,10 @@ const Tendance = () => {
   const { list, loading } = useSelector((state) => state.tendance);
   useEffect(() => {
     dispatch(getTendancesApi());
-    dispatch(getAllColosApi()) ; 
+    dispatch(getAllColosApi());
   }, []);
   return (
     <div>
-      <h1 className="py-2 ml-2"> Liste des Tendances </h1>
       <AddTendanceModal
         show={showModal}
         closeModal={() => {
@@ -32,7 +35,21 @@ const Tendance = () => {
         }}
         tendance={selectedTendance}
       />
-      <div className="flex  justify-end py-3">
+      <div className="flex  justify-between py-3 m-3">
+        <div>
+        <input
+          type="text"
+          id="text"
+          className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+          placeholder="Recherche"
+          onChange={(event) => {
+            dispatch({
+              type: SEARCH_TENDANCE,
+              payload: event.target.value,
+            });
+          }}
+        />
+        </div>
         <div>
           <button
             onClick={() => {
@@ -112,18 +129,28 @@ const Tendance = () => {
                           {elm.description}
                         </p>
                       </td>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm " style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                      }}>
+                      <td
+                        class="px-5 py-5 border-b border-gray-200 bg-white text-sm "
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
                         <span> {elm.refColor && elm.refColor.nameColor}</span>
-                        <span> {elm.refColor && <div style={{
-                          height: 30,
-                          width: 30,
-                          backgroundColor: elm.refColor.refColor
-                        }}></div>}</span>
+                        <span>
+                          {" "}
+                          {elm.refColor && (
+                            <div
+                              style={{
+                                height: 30,
+                                width: 30,
+                                backgroundColor: elm.refColor.refColor,
+                              }}
+                            ></div>
+                          )}
+                        </span>
                       </td>
                       <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className=" flex justify-between flex-row w-40">
@@ -153,7 +180,6 @@ const Tendance = () => {
                 })}
             </tbody>
           </table>
-
         </div>
       </div>
     </div>

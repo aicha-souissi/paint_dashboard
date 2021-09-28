@@ -20,7 +20,7 @@ const Login = () => {
   return (
     <div className=" justify-self-center mt-24 flex max-h-96 flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
       <div className="self-center mb-6 text-xl font-light text-gray-600 sm:text-2xl dark:text-white">
-        Login To Your Account
+      Connectez-vous à votre compte
       </div>
       <div className="mt-8">
         <form onSubmit={handleSubmit(submitForm)}>
@@ -86,7 +86,7 @@ const Login = () => {
               type="submit"
               className="py-2 px-4  bg-red-500 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
             >
-              Login
+              Se connecter
             </button>
             {/* <Link
               to="/dashboard"

@@ -5,6 +5,7 @@ import {
   DELETE_COLOR_SUCCESS,
   GET_ALL_COLORS,
   GET_ALL_COLORS_SUCCESS,
+  SEARCH_COLOR,
   UPDATE_COLOR,
   UPDATE_COLOR_SUCCESS,
 } from "../const/actionTypes";
@@ -51,6 +52,14 @@ const colorReducer = (state = colorInitState, action) => {
         ...state,
         loading: false,
       };
+    case SEARCH_COLOR:
+      if (payload !== "") {
+        let newList = state.baseList.filter((elm) => elm.nameColor.includes(payload));
+        return { ...state, baseList: newList };
+      } else {
+        return { ...state, editList: state.baseList };
+      }
+
     default:
       return state;
   }
